@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# @brief   Generating Perl module
+# @brief   Generating Perl Package Module
 # @version ver.1.0
 # @date    Wed May 11 13:00:19 CEST 2016
 # @company Frobas IT Department, www.frobas.com 2016
@@ -15,6 +15,8 @@ UTIL_LOG=$UTIL/log
 . $UTIL/bin/checktool.sh
 . $UTIL/bin/loadutilconf.sh
 . $UTIL/bin/loadconf.sh
+. $UTIL/bin/logging.sh
+. $UTIL/bin/sendmail.sh
 . $UTIL/bin/usage.sh
 . $UTIL/bin/devel.sh
 
@@ -32,18 +34,24 @@ declare -A GENPM_USAGE=(
 	[EX]="__$GENPM_TOOL FileCheck"
 )
 
+declare -A LOG=(
+	[TOOL]="$GENPM_TOOL"
+	[FLAG]="info"
+	[PATH]="$GENPM_LOG"
+	[MSG]=""
+)
+
 TOOL_DBG="false"
 
 #
 # @brief   Main function 
 # @params  Values required name of Perl module and option
-# @exitval Function genpm exit with integer value
-#			0   - success operation 
-# 			127 - run as root user
-#			128 - missing argument
-#			129 - missing main config file
-#			130 - missing util config file
-#			131 - missing h2xs tool
+# @exitval Function __genpm exit with integer value
+#			0   - tool finished with success operation
+#			128 - missing argument(s) from cli 
+#			129 - failed to load tool script configuration from file
+#			130 - failed to load tool script utilities configuration from file
+#			131 - missing external tool h2xs
 #
 # @usage
 # @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
@@ -61,12 +69,24 @@ function __genpm() {
 		__loadconf $GENPM_CFG cfggenpm
 		local STATUS=$?
 		if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
+			MSG="Failed to load tool script configuration"
+			if [ "$TOOL_DBG" == "true" ]; then
+				printf "$DSTA" "$GENPM_TOOL" "$FUNC" "$MSG"
+			else
+				printf "$SEND" "[$GENPM_TOOL]" "$MSG"
+			fi
 			exit 129
 		fi
 		declare -A cfggenpmutil=()
 		__loadutilconf $GENPM_UTIL_CFG cfggenpmutil
 		STATUS=$?
 		if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
+			MSG="Failed to load tool script utilities configuration"
+			if [ "$TOOL_DBG" == "true" ]; then
+				printf "$DSTA" "$GENPM_TOOL" "$FUNC" "$MSG"
+			else
+				printf "$SEND" "[$GENPM_TOOL]" "$MSG"
+			fi
 			exit 130
 		fi
 		__checktool "${cfggenpmutil[H2XS]}"
@@ -78,6 +98,11 @@ function __genpm() {
 				printf "$DSTA" "$GENPM_TOOL" "$FUNC" "$MSG"
 			else
 				printf "$SEND" "[$GENPM_TOOL]" "$MSG"
+			fi
+			if [ "${cfggenpm[LOGGING]}" == "true" ]; then
+				LOG[MSG]=$MSG
+				LOG[FLAG]="info"
+				__logging $LOG
 			fi
 			if [ -n "$WITH_C_CODE" ]; then
 				if [ "$WITH_C_CODE" == "wc" ]; then
@@ -107,7 +132,26 @@ function __genpm() {
 			else
 				printf "$SEND" "[$GENPM_TOOL]" "$MSG"
 			fi
+			if [ "${cfggenpm[LOGGING]}" == "true" ]; then
+				LOG[MSG]=$MSG
+				LOG[FLAG]="info"
+				__logging $LOG
+			fi
 			exit 0
+		fi
+		MSG="Missing external tool ${cfggenpmutil[H2XS]}"
+		if [ "$TOOL_DBG" == "true" ]; then
+			printf "$DSTA" "$GENPM_TOOL" "$FUNC" "$MSG"
+		else
+			printf "$SEND" "[$GENPM_TOOL]" "$MSG"
+		fi
+		if [ "${cfggenpm[LOGGING]}" == "true" ]; then
+			LOG[MSG]=$MSG
+			LOG[FLAG]="info"
+			__logging $LOG
+		fi
+		if [ "${cfggenpm[EMAILING]}" == "true" ]; then
+			__sendmail "$MSG" "${cfggenpm[ADMIN_EMAIL]}"
 		fi
 		exit 131
 	fi
@@ -119,12 +163,12 @@ function __genpm() {
 # @brief   Main entry point
 # @params  Values required module name and option with C code
 # @exitval Script tool genpm exit with integer value
-#			0   - success operation 
-# 			127 - run as root user
-#			128 - missing argument
-#			129 - missing main config file
-#			130 - missing util config file
-#			131 - missing h2xs tool
+#			0   - tool finished with success operation
+# 			127 - run tool script as root user from cli
+#			128 - missing argument(s) from cli 
+#			129 - failed to load tool script configuration from file
+#			130 - failed to load tool script utilities configuration from file
+#			131 - missing external tool h2xs
 #
 printf "\n%s\n%s\n\n" "$GENPM_TOOL $GENPM_VERSION" "`date`"
 __checkroot
@@ -134,3 +178,4 @@ if [ "$STATUS" -eq "$SUCCESS" ]; then
 fi
 
 exit 127
+
