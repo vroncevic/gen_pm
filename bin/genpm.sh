@@ -72,7 +72,7 @@ function __genpm() {
 	if [ -n "$MODULE_NAME" ]; then
 		local FUNC=${FUNCNAME[0]}
 		local MSG="Loading basic and util configuration"
-		printf "$SEND" "$OSSL_TOOL" "$MSG"
+		printf "$SEND" "$GENPM_TOOL" "$MSG"
 		__progressbar PB_STRUCTURE
 		printf "%s\n\n" ""
 		declare -A configgenpm=()
