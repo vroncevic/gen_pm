@@ -11,14 +11,15 @@ UTIL_VERSION=ver.1.0
 UTIL=$UTIL_ROOT/sh-util-srv/$UTIL_VERSION
 UTIL_LOG=$UTIL/log
 
+. $UTIL/bin/devel.sh
+. $UTIL/bin/usage.sh
 . $UTIL/bin/checkroot.sh
 . $UTIL/bin/checktool.sh
-. $UTIL/bin/loadutilconf.sh
-. $UTIL/bin/loadconf.sh
 . $UTIL/bin/logging.sh
 . $UTIL/bin/sendmail.sh
-. $UTIL/bin/usage.sh
-. $UTIL/bin/devel.sh
+. $UTIL/bin/loadconf.sh
+. $UTIL/bin/loadutilconf.sh
+. $UTIL/bin/progressbar.sh
 
 GENPM_TOOL=genpm
 GENPM_VERSION=ver.1.0
@@ -28,17 +29,23 @@ GENPM_UTIL_CFG=$GENPM_HOME/conf/${GENPM_TOOL}_util.cfg
 GENPM_LOG=$GENPM_HOME/log
 
 declare -A GENPM_USAGE=(
-	[TOOL_NAME]="__$GENPM_TOOL"
-	[ARG1]="[MODULE_NAME] Name of Perl module (file name)"
-	[EX-PRE]="# Create FileCheck module"
-	[EX]="__$GENPM_TOOL FileCheck"
+	[USAGE_TOOL]="__$GENPM_TOOL"
+	[USAGE_ARG1]="[MODULE_NAME] Name of Perl module (file name)"
+	[USAGE_EX_PRE]="# Create FileCheck module"
+	[USAGE_EX]="__$GENPM_TOOL FileCheck"
 )
 
-declare -A LOG=(
-	[TOOL]="$GENPM_TOOL"
-	[FLAG]="info"
-	[PATH]="$GENPM_LOG"
-	[MSG]=""
+declare -A GENPM_LOG=(
+	[LOG_TOOL]="$GENPM_TOOL"
+	[LOG_FLAG]="info"
+	[LOG_PATH]="$GENPM_LOG"
+	[LOG_MSGE]="None"
+)
+
+declare -A PB_STRUCTURE=(
+	[BAR_WIDTH]=50
+	[MAX_PERCENT]=100
+	[SLEEP]=0.01
 )
 
 TOOL_DBG="false"
@@ -64,61 +71,66 @@ function __genpm() {
 	local WITH_C_CODE=$2
 	if [ -n "$MODULE_NAME" ]; then
 		local FUNC=${FUNCNAME[0]}
-		local MSG=""
-		declare -A cfggenpm=()
-		__loadconf $GENPM_CFG cfggenpm
+		local MSG="Loading basic and util configuration"
+		printf "$SEND" "$OSSL_TOOL" "$MSG"
+		__progressbar PB_STRUCTURE
+		printf "%s\n\n" ""
+		declare -A configgenpm=()
+		__loadconf $GENPM_CFG configgenpm
 		local STATUS=$?
-		if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
+		if [ $STATUS -eq $NOT_SUCCESS ]; then
 			MSG="Failed to load tool script configuration"
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$GENPM_TOOL" "$FUNC" "$MSG"
 			else
-				printf "$SEND" "[$GENPM_TOOL]" "$MSG"
+				printf "$SEND" "$GENPM_TOOL" "$MSG"
 			fi
 			exit 129
 		fi
-		declare -A cfggenpmutil=()
-		__loadutilconf $GENPM_UTIL_CFG cfggenpmutil
+		declare -A configgenpmutil=()
+		__loadutilconf $GENPM_UTIL_CFG configgenpmutil
 		STATUS=$?
-		if [ "$STATUS" -eq "$NOT_SUCCESS" ]; then
+		if [ $STATUS -eq $NOT_SUCCESS ]; then
 			MSG="Failed to load tool script utilities configuration"
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$GENPM_TOOL" "$FUNC" "$MSG"
 			else
-				printf "$SEND" "[$GENPM_TOOL]" "$MSG"
+				printf "$SEND" "$GENPM_TOOL" "$MSG"
 			fi
 			exit 130
 		fi
-		__checktool "${cfggenpmutil[H2XS]}"
+		__checktool "${configgenpmutil[H2XS]}"
 		STATUS=$?
-		if [ "$STATUS" -eq "$SUCCESS" ]; then
+		if [ $STATUS -eq $SUCCESS ]; then
 			local DATE=$(date)
 			MSG="Generating module [$MODULE_NAME]"
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$GENPM_TOOL" "$FUNC" "$MSG"
 			else
-				printf "$SEND" "[$GENPM_TOOL]" "$MSG"
+				printf "$SEND" "$GENPM_TOOL" "$MSG"
 			fi
-			if [ "${cfggenpm[LOGGING]}" == "true" ]; then
-				LOG[MSG]=$MSG
-				LOG[FLAG]="info"
-				__logging $LOG
+			if [ "${configgenpm[LOGGING]}" == "true" ]; then
+				GENPM_LOG[LOG_MSGE]=$MSG
+				GENPM_LOG[LOG_FLAG]="info"
+				__logging GENPM_LOG
 			fi
 			if [ -n "$WITH_C_CODE" ]; then
 				if [ "$WITH_C_CODE" == "wc" ]; then
-					eval "${cfggenpmutil[H2XS]} -cn \"$MODULE_NAME\""
+					eval "${configgenpmutil[H2XS]} -cn \"$MODULE_NAME\""
 				fi
 				:
 			else
-				eval "${cfggenpmutil[H2XS]} -AX -n \"$MODULE_NAME\""
+				eval "${configgenpmutil[H2XS]} -AX -n \"$MODULE_NAME\""
 			fi
 			MSG="Set owner $UGID \"$MODULE_NAME\""
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$GENPM_TOOL" "$FUNC" "$MSG"
 			else
-				printf "$SEND" "[$GENPM_TOOL]" "$MSG"
+				printf "$SEND" "$GENPM_TOOL" "$MSG"
 			fi
-			chown -R ${cfggenpmutil[UGID]} "$MODULE_NAME/"
+			local PRFX_CMD="chown -R"
+			local OWNER=${configgenpmutil[UGID]} 
+			eval "$PRFX_CMD $OWNER $MODULE_NAME/"
 			MSG="Set permission \"$MODULE_NAME\""
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$GENPM_TOOL" "$FUNC" "$MSG"
@@ -130,32 +142,32 @@ function __genpm() {
 			if [ "$TOOL_DBG" == "true" ]; then
 				printf "$DSTA" "$GENPM_TOOL" "$FUNC" "$MSG"
 			else
-				printf "$SEND" "[$GENPM_TOOL]" "$MSG"
+				printf "$SEND" "$GENPM_TOOL" "$MSG"
 			fi
-			if [ "${cfggenpm[LOGGING]}" == "true" ]; then
-				LOG[MSG]=$MSG
-				LOG[FLAG]="info"
-				__logging $LOG
+			if [ "${configgenpm[LOGGING]}" == "true" ]; then
+				GENPM_LOG[LOG_MSGE]=$MSG
+				GENPM_LOG[LOG_FLAG]="info"
+				__logging GENPM_LOG
 			fi
 			exit 0
 		fi
-		MSG="Missing external tool ${cfggenpmutil[H2XS]}"
+		MSG="Missing external tool ${configgenpmutil[H2XS]}"
 		if [ "$TOOL_DBG" == "true" ]; then
 			printf "$DSTA" "$GENPM_TOOL" "$FUNC" "$MSG"
 		else
-			printf "$SEND" "[$GENPM_TOOL]" "$MSG"
+			printf "$SEND" "$GENPM_TOOL" "$MSG"
 		fi
-		if [ "${cfggenpm[LOGGING]}" == "true" ]; then
-			LOG[MSG]=$MSG
-			LOG[FLAG]="info"
-			__logging $LOG
+		if [ "${configgenpm[LOGGING]}" == "true" ]; then
+			GENPM_LOG[LOG_MSGE]=$MSG
+			GENPM_LOG[LOG_FLAG]="info"
+			__logging GENPM_LOG
 		fi
-		if [ "${cfggenpm[EMAILING]}" == "true" ]; then
-			__sendmail "$MSG" "${cfggenpm[ADMIN_EMAIL]}"
+		if [ "${configgenpm[EMAILING]}" == "true" ]; then
+			__sendmail "$MSG" "${configgenpm[ADMIN_EMAIL]}"
 		fi
 		exit 131
 	fi
-	__usage $GENPM_USAGE
+	__usage GENPM_USAGE
 	exit 128
 }
 
