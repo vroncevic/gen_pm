@@ -30,7 +30,7 @@ GEN_PM_LOG=${GEN_PM_HOME}/log
 
 declare -A GEN_PM_USAGE=(
 	[USAGE_TOOL]="__${GEN_PM_TOOL}"
-	[USAGE_ARG1]="[MODULE NAME] Name of Perl module (file name)"
+	[USAGE_ARG1]="[MODULE NAME] Name of Perl Module (file name)"
 	[USAGE_ARG2]="[WITH_C_CODE] Flag for generating C code (optional)"
 	[USAGE_EX_PRE]="# Create FileCheck module"
 	[USAGE_EX]="__${GEN_PM_TOOL} FileCheck"
@@ -58,7 +58,7 @@ TOOL_NOTIFY="false"
 # @params  Values required name of Perl module and option
 # @exitval Function __gen_pm exit with integer value
 #			0   - tool finished with success operation
-#			128 - missing argument(s) from cli 
+#			128 - missing argument(s) from cli
 #			129 - failed to load tool script configuration from files
 #			130 - missing external tool h2xs
 #
@@ -98,12 +98,9 @@ function __gen_pm() {
 		__check_tool "${H2XS}"
 		STATUS=$?
 		if [ $STATUS -eq $SUCCESS ]; then
-			local DATE=$(date)
+			local DATE=$(date) TREE
 			MSG="Generating module [${MNAME}]"
 			__info_debug_message "$MSG" "$FUNC" "$GEN_PM_TOOL"
-			GEN_PM_LOGGING[LOG_MSGE]="$MSG"
-			GEN_PM_LOGGING[LOG_FLAG]="info"
-			__logging GEN_PM_LOGGING
 			if [[ -n "${WCCODE}" && "${WCCODE}" == "wc" ]]; then
 				eval "${H2XS} -cn \"${MNAME}\""
 			else
@@ -122,10 +119,15 @@ function __gen_pm() {
 			GEN_PM_LOGGING[LOG_MSGE]="$MSG"
 			GEN_PM_LOGGING[LOG_FLAG]="info"
 			__logging GEN_PM_LOGGING
-			tree -L 3 "${MNAME}/"
+			TREE=$(which tree)
+			__check_tool "${TREE}"
+			STATUS=$?
+			if [ $STATUS -eq $SUCCESS ]; then
+				eval "${TREE} -L 3 ${MNAME}/"
+			fi
 			exit 0
 		fi
-		GEN_PM_LOG[LOG_MSGE]="Missing external tool ${H2XS}"
+		GEN_PM_LOG[LOG_MSGE]="Missing tool ${H2XS}"
 		GEN_PM_LOG[LOG_FLAG]="info"
 		__logging GEN_PM_LOG
 		__send_mail "$MSG" "${config_gen_pm[ADMIN_EMAIL]}"
