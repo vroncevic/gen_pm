@@ -28,12 +28,12 @@ GEN_PM_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}.cfg
 GEN_PM_UTIL_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}_util.cfg
 GEN_PM_LOG=${GEN_PM_HOME}/log
 
-declare -A GEN_PM_USAGE=(
-    [USAGE_TOOL]="${GEN_PM_TOOL}"
-    [USAGE_ARG1]="[MODULE NAME] Name of Perl Module (file name)"
-    [USAGE_ARG2]="[WITH_C_CODE] Flag for generating C code (optional)"
-    [USAGE_EX_PRE]="# Create FileCheck module"
-    [USAGE_EX]="${GEN_PM_TOOL} FileCheck"
+declare -A GEN_PM_Usage=(
+    [Usage_TOOL]="${GEN_PM_TOOL}"
+    [Usage_ARG1]="[MODULE NAME] Name of Perl Module (file name)"
+    [Usage_ARG2]="[WITH_C_CODE] Flag for generating C code (optional)"
+    [Usage_EX_PRE]="# Create FileCheck module"
+    [Usage_EX]="${GEN_PM_TOOL} FileCheck"
 )
 
 declare -A GEN_PM_LOGGING=(
@@ -136,7 +136,7 @@ function __gen_pm {
         info_debug_message_end "$MSG" "$FUNC" "$GEN_PM_TOOL"
         exit 130
     fi
-    usage GEN_PM_USAGE
+    usage GEN_PM_Usage
     exit 128
 }
 
