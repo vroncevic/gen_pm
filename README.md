@@ -27,7 +27,7 @@ other information that should be provided before the tool is installed.
 
 ### Installation
 
-Navigate to release [page](https://github.com/vroncevic/gen_pm/releases) download and extract release archive.
+Navigate to release **[page](https://github.com/vroncevic/gen_pm/releases)** download and extract release archive.
 
 To install modules type the following:
 
