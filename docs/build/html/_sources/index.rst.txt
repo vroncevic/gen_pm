@@ -1,14 +1,14 @@
-GEN_PM
+gen_pm
 -------
-
-.. toctree::
- :hidden:
-
- self
 
 **gen_pm** is shell tool for generating Perl package.
 
 Developed in `bash <https://en.wikipedia.org/wiki/Bash_(Unix_shell)>`_ code: **100%**.
+
+|GitHub shell checker|
+
+.. |GitHub shell checker| image:: https://github.com/vroncevic/gen_pm/workflows/gen_pm%20shell%20checker/badge.svg
+   :target: https://github.com/vroncevic/gen_pm/actions?query=workflow%3A%22gen_pm+shell+checker%22
 
 The README is used to introduce the tool and provide instructions on
 how to install the tool, any machine dependencies it may have and any
@@ -25,7 +25,12 @@ other information that should be provided before the tool is installed.
 .. |Documentation Status| image:: https://readthedocs.org/projects/gen_pm/badge/?version=latest
    :target: https://gen_pm.readthedocs.io/projects/gen_pm/en/latest/?badge=latest
 
-INSTALLATION
+.. toctree::
+    :hidden:
+
+    self
+
+Installation
 -------------
 
 Navigate to release `page`_ download and extract release archive.
@@ -42,13 +47,20 @@ To install **gen_pm** type the following:
    cp -R ~/sh_tool/conf/  /root/scripts/gen_pm/ver.1.0/
    cp -R ~/sh_tool/log/   /root/scripts/gen_pm/ver.1.0/
 
-DEPENDENCIES
+Or You can use Docker to create image/container.
+
+|GitHub docker checker|
+
+.. |GitHub docker checker| image:: https://github.com/vroncevic/gen_pm/workflows/gen_pm%20docker%20checker/badge.svg
+   :target: https://github.com/vroncevic/gen_pm/actions?query=workflow%3A%22gen_pm+docker+checker%22
+
+Dependencies
 -------------
 
 **gen_pm** requires next modules and libraries:
     sh_util `https://github.com/vroncevic/sh_util <https://github.com/vroncevic/sh_util>`_
 
-SHELL TOOL STRUCTURE
+Shell tool structure
 ---------------------
 
 **gen_pm** is based on MOP.
@@ -66,7 +78,7 @@ Code structure:
    └── log/
        └── gen_pm.log
 
-COPYRIGHT AND LICENCE
+Copyright and licence
 ----------------------
 
 |License: GPL v3| |License: Apache 2.0|
@@ -79,7 +91,7 @@ COPYRIGHT AND LICENCE
 
 Copyright (C) 2016 by `vroncevic.github.io/gen_pm <https://vroncevic.github.io/gen_pm>`_
 
-This tool is free software; you can redistribute it and/or modify it
+**gen_pm** is free software; you can redistribute it and/or modify it
 under the same terms as Bash itself, either Bash version 4.2.47 or,
 at your option, any later version of Bash 4 you may have available.
 
