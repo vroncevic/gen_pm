@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # @brief   Generating Perl Package Module
-# @version ver.1.0.0
+# @version ver.1.0
 # @date    Wed May 11 13:00:19 CEST 2016
 # @company Frobas IT Department, www.frobas.com 2016
 # @author  Vladimir Roncevic <vladimir.roncevic@frobas.com>
@@ -28,7 +28,7 @@ GEN_PM_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}.cfg
 GEN_PM_UTIL_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}_util.cfg
 GEN_PM_LOG=${GEN_PM_HOME}/log
 
-declare -A GEN_PM_Usage=(
+declare -A GEN_PM_USAGE=(
     [Usage_TOOL]="${GEN_PM_TOOL}"
     [Usage_ARG1]="[MODULE NAME] Name of Perl Module (file name)"
     [Usage_ARG2]="[WITH_C_CODE] Flag for generating C code (optional)"
@@ -107,8 +107,8 @@ function __gen_pm {
             else
                 eval "${H2XS} -AX -n \"${MNAME}\""
             fi
-            local USRID=${config_gen_pm_util[UID]}
-            local GRPID=${config_gen_pm_util[GID]}
+            local USRID=${config_gen_pm_util[USERID]}
+            local GRPID=${config_gen_pm_util[GROUPID]}
             MSG="Set owner!"
             info_debug_message "$MSG" "$FUNC" "$GEN_PM_TOOL"
             eval "chown -R ${USRID}.${GRPID} ${MNAME}/"
@@ -136,7 +136,7 @@ function __gen_pm {
         info_debug_message_end "$MSG" "$FUNC" "$GEN_PM_TOOL"
         exit 130
     fi
-    usage GEN_PM_Usage
+    usage GEN_PM_USAGE
     exit 128
 }
 
@@ -145,7 +145,7 @@ function __gen_pm {
 # @params  Values required module name and option with C code
 # @exitval Script tool gen_pm exit with integer value
 #            0   - tool finished with success operation
-#             127 - run tool script as root user from cli
+#            127 - run tool script as root user from cli
 #            128 - missing argument(s) from cli 
 #            129 - failed to load tool script configuration from files
 #            130 - missing external tool h2xs
