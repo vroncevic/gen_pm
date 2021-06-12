@@ -41,11 +41,11 @@ To install **gen_pm** type the following:
 
 .. code-block:: bash
 
-   tar xvzf gen_pm-x.y.z.tar.gz
-   cd gen_pm-x.y.z
-   cp -R ~/sh_tool/bin/   /root/scripts/gen_pm/ver.1.0/
-   cp -R ~/sh_tool/conf/  /root/scripts/gen_pm/ver.1.0/
-   cp -R ~/sh_tool/log/   /root/scripts/gen_pm/ver.1.0/
+   tar xvzf gen_pm-x.y.tar.gz
+   cd gen_pm-x.y
+   cp -R ~/sh_tool/bin/   /root/scripts/gen_pm/ver.x.y/
+   cp -R ~/sh_tool/conf/  /root/scripts/gen_pm/ver.x.y/
+   cp -R ~/sh_tool/log/   /root/scripts/gen_pm/ver.x.y/
 
 Or You can use Docker to create image/container.
 
@@ -70,7 +70,7 @@ Code structure:
 
 .. code-block:: bash
 
-   .
+   sh_tool/
    ├── bin/
    │   └── gen_pm.sh
    ├── conf/
@@ -90,7 +90,7 @@ Copyright and licence
 .. |License: Apache 2.0| image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
    :target: https://opensource.org/licenses/Apache-2.0
 
-Copyright (C) 2016 by `vroncevic.github.io/gen_pm <https://vroncevic.github.io/gen_pm>`_
+Copyright (C) 2017 by `vroncevic.github.io/gen_pm <https://vroncevic.github.io/gen_pm>`_
 
 **gen_pm** is free software; you can redistribute it and/or modify it
 under the same terms as Bash itself, either Bash version 4.2.47 or,
