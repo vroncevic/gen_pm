@@ -29,6 +29,8 @@ other information that should be provided before the tool is installed.
 
 ### Installation
 
+![Debian Linux OS](https://raw.githubusercontent.com/vroncevic/gen_pm/dev/docs/debtux.png)
+
 Navigate to release **[page](https://github.com/vroncevic/gen_pm/releases)** download and extract release archive.
 
 To install **gen_pm** type the following:
@@ -41,7 +43,33 @@ cp -R ~/sh_tool/conf/  /root/scripts/gen_pm/ver.x.y/
 cp -R ~/sh_tool/log/   /root/scripts/gen_pm/ver.x.y/
 ```
 
-![alt tag](https://raw.githubusercontent.com/vroncevic/gen_pm/dev/docs/setup_tree.png)
+Self generated setup script and execution
+```
+./gen_pm_setup.sh 
+
+[setup] installing App/Tool/Script gen_pm
+	Sun 05 Dec 2021 04:51:29 AM CET
+[setup] copy App/Tool/Script structure
+[setup] remove github editor configuration files
+[setup] set App/Tool/Script permission
+[setup] create symbolic link of App/Tool/Script
+[setup] done
+
+/root/scripts/gen_pm/ver.2.0/
+├── bin/
+│   ├── center.sh
+│   ├── display_logo.sh
+│   └── gen_pm.sh
+├── conf/
+│   ├── gen_pm.cfg
+│   ├── gen_pm.logo
+│   └── gen_pm_util.cfg
+└── log/
+    └── gen_pm.log
+
+3 directories, 7 files
+lrwxrwxrwx 1 root root 42 Dec  5 04:51 /root/bin/gen_pm -> /root/scripts/gen_pm/ver.2.0/bin/gen_pm.sh
+```
 
 Or You can use docker to create image/container.
 
@@ -57,25 +85,97 @@ ln -s /root/scripts/gen_pm/ver.x.y/bin/gen_pm.sh /root/bin/gen_pm
 export PATH=${PATH}:/root/bin/
 
 # Generating Perl package
-gen_pm SimplePlTool
+gen_pm FileCheck
+
+gen_pm ver.2.0
+Sun 05 Dec 2021 04:54:08 AM CET
+
+[check_root] Check permission for current session? [ok]
+[check_root] Done
+
+	                                    
+	  __ _  ___ _ __    _ __  _ __ ___  
+	 / _` |/ _ \ '_ \  | '_ \| '_ ` _ \ 
+	| (_| |  __/ | | | | |_) | | | | | |
+	 \__, |\___|_| |_| | .__/|_| |_| |_|
+	 |___/             |_|              
+	                                    
+		Info   github.io/gen_pm ver.2.0 
+		Issue  github.io/issue
+		Author vroncevic.github.io
+
+[gen_pm] Loading basic and util configuration!
+100% [================================================]
+
+[load_conf] Loading App/Tool/Script configuration!
+[check_cfg] Checking configuration file [/root/scripts/gen_pm/ver.2.0/conf/gen_pm.cfg] [ok]
+[check_cfg] Done
+
+[load_conf] Done
+
+[load_util_conf] Load module configuration!
+[check_cfg] Checking configuration file [/root/scripts/gen_pm/ver.2.0/conf/gen_pm_util.cfg] [ok]
+[check_cfg] Done
+
+[load_util_conf] Done
+
+[check_tool] Checking tool [/usr/bin/h2xs]? [ok]
+[check_tool] Done
+
+[gen_pm] Generating module [FileCheck]
+Defaulting to backwards compatibility with perl 5.30.0
+If you intend this module to be compatible with earlier perl versions, please
+specify a minimum perl version with the -b option.
+
+Writing FileCheck/lib/FileCheck.pm
+Writing FileCheck/Makefile.PL
+Writing FileCheck/README
+Writing FileCheck/t/FileCheck.t
+Writing FileCheck/Changes
+Writing FileCheck/MANIFEST
+[gen_pm] Set owner!
+[gen_pm] Set permission!
+[gen_pm] Done
+
+[logging] Checking directory [/root/scripts/gen_pm/ver.2.0/log/]? [ok]
+[logging] Write info log!
+[logging] Done
+
+[check_tool] Checking tool [/usr/bin/tree]? [ok]
+[check_tool] Done
+
+FileCheck/
+├── Changes
+├── lib
+│   └── FileCheck.pm
+├── Makefile.PL
+├── MANIFEST
+├── README
+└── t
+    └── FileCheck.t
+
+2 directories, 6 files
 ```
 
 ### Dependencies
 
-**gen_pm** requires next modules and libraries:
+**gen_pm** requires next modules and libraries
 * sh_util [https://github.com/vroncevic/sh_util](https://github.com/vroncevic/sh_util)
 
 ### Shell tool structure
 
 **gen_pm** is based on MOP.
 
-Code structure:
+Shell tool structure
 ```
 sh_tool/
 ├── bin/
+│   ├── center.sh
+│   ├── display_logo.sh
 │   └── gen_pm.sh
 ├── conf/
 │   ├── gen_pm.cfg
+│   ├── gen_pm.logo
 │   └── gen_pm_util.cfg
 └── log/
     └── gen_pm.log
@@ -85,7 +185,7 @@ sh_tool/
 
 [![Documentation Status](https://readthedocs.org/projects/gen_pm/badge/?version=latest)](https://gen_pm.readthedocs.io/projects/gen_pm/en/latest/?badge=latest)
 
-More documentation and info at:
+More documentation and info at
 * [https://gen_pm.readthedocs.io/en/latest/](https://gen_pm.readthedocs.io/en/latest/)
 * [https://www.gnu.org/software/bash/manual/](https://www.gnu.org/software/bash/manual/)
 

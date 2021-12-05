@@ -3,7 +3,7 @@
 project = u'gen_pm'
 copyright = u'2017, Vladimir Roncevic <elektron.ronca@gmail.com>'
 author = u'Vladimir Roncevic <elektron.ronca@gmail.com>'
-version = u'1.0'
+version = u'2.0'
 release = u'https://github.com/vroncevic/gen_pm/releases'
 extensions = []
 templates_path = ['_templates']
