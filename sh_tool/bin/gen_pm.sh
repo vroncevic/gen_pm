@@ -1,10 +1,10 @@
 #!/bin/bash
 #
 # @brief   Generating Perl Package Module
-# @version ver.1.0
-# @date    Wed May 11 13:00:19 CEST 2016
-# @company Frobas IT Department, www.frobas.com 2016
-# @author  Vladimir Roncevic <vladimir.roncevic@frobas.com>
+# @version ver.2.0
+# @date    Sun 05 Dec 2021 04:45:55 AM CET
+# @company None, free software to use 2021
+# @author  Vladimir Roncevic <elektron.ronca@gmail.com>
 #
 UTIL_ROOT=/root/scripts
 UTIL_VERSION=ver.1.0
@@ -22,18 +22,25 @@ UTIL_LOG=${UTIL}/log
 .    ${UTIL}/bin/progress_bar.sh
 
 GEN_PM_TOOL=gen_pm
-GEN_PM_VERSION=ver.1.0
+GEN_PM_VERSION=ver.2.0
 GEN_PM_HOME=${UTIL_ROOT}/${GEN_PM_TOOL}/${GEN_PM_VERSION}
 GEN_PM_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}.cfg
 GEN_PM_UTIL_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}_util.cfg
+GEN_PM_LOGO=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}.logo
 GEN_PM_LOG=${GEN_PM_HOME}/log
 
+tabs 4
+CONSOLE_WIDTH=$(stty size | awk '{print $2}')
+
+.    ${GEN_PM_HOME}/bin/center.sh
+.    ${GEN_PM_HOME}/bin/display_logo.sh
+
 declare -A GEN_PM_USAGE=(
-    [Usage_TOOL]="${GEN_PM_TOOL}"
-    [Usage_ARG1]="[MODULE NAME] Name of Perl Module (file name)"
-    [Usage_ARG2]="[WITH_C_CODE] Flag for generating C code (optional)"
-    [Usage_EX_PRE]="# Create FileCheck module"
-    [Usage_EX]="${GEN_PM_TOOL} FileCheck"
+    [USAGE_TOOL]="${GEN_PM_TOOL}"
+    [USAGE_ARG1]="[MODULE NAME] Name of Perl Module (file name)"
+    [USAGE_ARG2]="[WITH_C_CODE] Flag for generating C code (optional)"
+    [USAGE_EX_PRE]="# Create FileCheck module"
+    [USAGE_EX]="${GEN_PM_TOOL} FileCheck"
 )
 
 declare -A GEN_PM_LOGGING=(
@@ -70,6 +77,7 @@ TOOL_NOTIFY="false"
 #
 function __gen_pm {
     local MNAME=$1 WCCODE=$2
+    display_logo
     if [ -n "${MNAME}" ]; then
         local FUNC=${FUNCNAME[0]} MSG="None"
         local STATUS_CONF STATUS_CONF_UTIL STATUS
@@ -158,4 +166,3 @@ if [ $STATUS -eq $SUCCESS ]; then
 fi
 
 exit 127
-
