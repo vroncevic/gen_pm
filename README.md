@@ -6,7 +6,7 @@
 
 Developed in **[bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))** code: **100%**.
 
-[![gen_pm shell checker](https://github.com/vroncevic/gen_pm/workflows/gen_pm%20shell%20checker/badge.svg)](https://github.com/vroncevic/gen_pm/actions?query=workflow%3A%22gen_pm+shell+checker%22)
+[![gen_pm_shell_checker](https://github.com/vroncevic/gen_pm/actions/workflows/gen_pm_shell_checker.yml/badge.svg)](https://github.com/vroncevic/gen_pm/actions/workflows/gen_pm_shell_checker.yml)
 
 The README is used to introduce the tool and provide instructions on
 how to install the tool, any machine dependencies it may have and any
@@ -73,8 +73,6 @@ lrwxrwxrwx 1 root root 42 Dec  5 04:51 /root/bin/gen_pm -> /root/scripts/gen_pm/
 
 Or You can use docker to create image/container.
 
-[![gen_pm docker checker](https://github.com/vroncevic/gen_pm/workflows/gen_pm%20docker%20checker/badge.svg)](https://github.com/vroncevic/gen_pm/actions?query=workflow%3A%22gen_pm+docker+checker%22)
-
 ### Usage
 
 ```
@@ -93,12 +91,16 @@ Sun 05 Dec 2021 04:54:08 AM CET
 [check_root] Check permission for current session? [ok]
 [check_root] Done
 
-	                                    
-	  __ _  ___ _ __    _ __  _ __ ___  
-	 / _` |/ _ \ '_ \  | '_ \| '_ ` _ \ 
-	| (_| |  __/ | | | | |_) | | | | | |
-	 \__, |\___|_| |_| | .__/|_| |_| |_|
-	 |___/             |_|              
+                                                       
+                                                       
+    █████   █████  ███████        ██████  ██████████   
+   ██░░░██ ██░░░██░░██░░░██      ░██░░░██░░██░░██░░██  
+  ░██  ░██░███████ ░██  ░██      ░██  ░██ ░██ ░██ ░██  
+  ░░██████░██░░░░  ░██  ░██      ░██████  ░██ ░██ ░██  
+   ░░░░░██░░██████ ███  ░██ █████░██░░░   ███ ░██ ░██  
+    █████  ░░░░░░ ░░░   ░░ ░░░░░ ░██     ░░░  ░░  ░░   
+   ░░░░░                         ░░                    
+                                                        
 	                                    
 		Info   github.io/gen_pm ver.2.0 
 		Issue  github.io/issue
@@ -146,12 +148,12 @@ Writing FileCheck/MANIFEST
 
 FileCheck/
 ├── Changes
-├── lib
+├── lib/
 │   └── FileCheck.pm
 ├── Makefile.PL
 ├── MANIFEST
 ├── README
-└── t
+└── t/
     └── FileCheck.t
 
 2 directories, 6 files
@@ -183,17 +185,17 @@ sh_tool/
 
 ### Docs
 
-[![Documentation Status](https://readthedocs.org/projects/gen_pm/badge/?version=latest)](https://gen_pm.readthedocs.io/projects/gen_pm/en/latest/?badge=latest)
+[![Documentation Status](https://readthedocs.org/projects/gen_pm/badge/?version=latest)](https://gen-pm.readthedocs.io/projects/gen_pm/en/latest/?badge=latest)
 
 More documentation and info at
-* [https://gen_pm.readthedocs.io/en/latest/](https://gen_pm.readthedocs.io/en/latest/)
+* [https://gen_pm.readthedocs.io/en/latest/](https://gen-pm.readthedocs.io/en/latest/)
 * [https://www.gnu.org/software/bash/manual/](https://www.gnu.org/software/bash/manual/)
 
 ### Copyright and licence
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-Copyright (C) 2016 by [vroncevic.github.io/gen_pm](https://vroncevic.github.io/gen_pm)
+Copyright (C) 2016 - 2024 by [vroncevic.github.io/gen_pm](https://vroncevic.github.io/gen_pm)
 
 **gen_pm** is free software; you can redistribute it and/or modify
 it under the same terms as Bash itself, either Bash version 4.2.47 or,
