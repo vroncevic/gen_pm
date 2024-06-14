@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>gen_pm &#8212; gen_pm https://github.com/vroncevic/gen_pm/releases documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=514cf933" />
+    
+    <script src="_static/documentation_options.js?v=c3c66e7d"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">gen_pm https://github.com/vroncevic/gen_pm/releases documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">gen_pm</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="gen-pm">
+<h1>gen_pm<a class="headerlink" href="#gen-pm" title="Link to this heading">¶</a></h1>
+<p><strong>gen_pm</strong> is shell tool for generating Perl package.</p>
+<p>Developed in <a class="reference external" href="https://en.wikipedia.org/wiki/Bash_(Unix_shell)">bash</a> code: <strong>100%</strong>.</p>
+<p><a class="reference external" href="https://github.com/vroncevic/gen_pm/actions/workflows/gen_pm_shell_checker.yml"><img alt="GitHub shell checker" src="https://github.com/vroncevic/gen_pm/actions/workflows/gen_pm_shell_checker.yml/badge.svg" /></a></p>
+<p>The README is used to introduce the tool and provide instructions on
+how to install the tool, any machine dependencies it may have and any
+other information that should be provided before the tool is installed.</p>
+<p><a class="reference external" href="https://github.com/vroncevic/gen_pm/issues"><img alt="GitHub issues" src="https://img.shields.io/github/issues/vroncevic/gen_pm.svg" /></a> <a class="reference external" href="https://gen-pm.readthedocs.io/projects/gen_pm/en/latest/?badge=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/gen_pm/badge/?version=latest" /></a> <a class="reference external" href="https://github.com/vroncevic/gen_pm/graphs/contributors"><img alt="GitHub contributors" src="https://img.shields.io/github/contributors/vroncevic/gen_pm.svg" /></a></p>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://www.debian.org"><img alt="Debian Linux OS" src="https://raw.githubusercontent.com/vroncevic/gen_pm/dev/docs/debtux.png" /></a></p>
+<p>Navigate to release <a class="reference external" href="https://github.com/vroncevic/gen_pm/releases">page</a> download and extract release archive.</p>
+<p>To install <strong>gen_pm</strong> type the following</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>tar<span class="w"> </span>xvzf<span class="w"> </span>gen_pm-x.y.tar.gz
+<span class="nb">cd</span><span class="w"> </span>gen_pm-x.y
+cp<span class="w"> </span>-R<span class="w"> </span>~/sh_tool/bin/<span class="w">   </span>/root/scripts/gen_pm/ver.x.y/
+cp<span class="w"> </span>-R<span class="w"> </span>~/sh_tool/conf/<span class="w">  </span>/root/scripts/gen_pm/ver.x.y/
+cp<span class="w"> </span>-R<span class="w"> </span>~/sh_tool/log/<span class="w">   </span>/root/scripts/gen_pm/ver.x.y/
+</pre></div>
+</div>
+<p>Or You can use Docker to create image/container.</p>
+</section>
+<section id="dependencies">
+<h1>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading">¶</a></h1>
+<p><strong>gen_pm</strong> requires next modules and libraries</p>
+<ul class="simple">
+<li><p>sh_util <a class="reference external" href="https://github.com/vroncevic/sh_util">https://github.com/vroncevic/sh_util</a></p></li>
+</ul>
+</section>
+<section id="shell-tool-structure">
+<h1>Shell tool structure<a class="headerlink" href="#shell-tool-structure" title="Link to this heading">¶</a></h1>
+<p><strong>gen_pm</strong> is based on MOP.</p>
+<p>Shell tool structure</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sh_tool/
+├──<span class="w"> </span>bin/
+│<span class="w">   </span>├──<span class="w"> </span>center.sh
+│<span class="w">   </span>├──<span class="w"> </span>display_logo.sh
+│<span class="w">   </span>└──<span class="w"> </span>gen_pm.sh
+├──<span class="w"> </span>conf/
+│<span class="w">   </span>├──<span class="w"> </span>gen_pm.cfg
+│<span class="w">   </span>├──<span class="w"> </span>gen_pm.logo
+│<span class="w">   </span>└──<span class="w"> </span>gen_pm_util.cfg
+└──<span class="w"> </span>log/
+<span class="w">    </span>└──<span class="w"> </span>gen_pm.log
+</pre></div>
+</div>
+</section>
+<section id="copyright-and-licence">
+<h1>Copyright and licence<a class="headerlink" href="#copyright-and-licence" title="Link to this heading">¶</a></h1>
+<p><a class="reference external" href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a> <a class="reference external" href="https://opensource.org/licenses/Apache-2.0"><img alt="License: Apache 2.0" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" /></a></p>
+<p>Copyright (C) 2016 - 2024 by <a class="reference external" href="https://vroncevic.github.io/gen_pm">vroncevic.github.io/gen_pm</a></p>
+<p><strong>gen_pm</strong> is free software; you can redistribute it and/or modify it
+under the same terms as Bash itself, either Bash version 4.2.47 or,
+at your option, any later version of Bash 4 you may have available.</p>
+<p>Lets help and support FSF.</p>
+<p><a class="reference external" href="https://my.fsf.org/"><img alt="Free Software Foundation" src="https://raw.githubusercontent.com/vroncevic/gen_pm/dev/docs/fsf-logo_1.png" /></a></p>
+<p><a class="reference external" href="https://my.fsf.org/donate/"><img alt="Donate" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" /></a></p>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Link to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="#">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">gen_pm</a></li>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="#shell-tool-structure">Shell tool structure</a></li>
+<li><a class="reference internal" href="#copyright-and-licence">Copyright and licence</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="#">gen_pm https://github.com/vroncevic/gen_pm/releases documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">gen_pm</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Copyright 2024, Vladimir Roncevic &lt;elektron.ronca@gmail.com&gt;.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    </div>
+  </body>
+</html>

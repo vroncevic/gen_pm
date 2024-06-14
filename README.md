@@ -1,6 +1,6 @@
-<img align="right" src="https://raw.githubusercontent.com/vroncevic/gen_pm/dev/docs/gen_pm_logo.png" width="25%">
-
 # Generating Perl Package Module
+
+<img align="right" src="https://raw.githubusercontent.com/vroncevic/gen_pm/dev/docs/gen_pm_logo.png" width="25%">
 
 **gen_pm** is shell tool for generating Perl package.
 
@@ -35,7 +35,7 @@ Navigate to release **[page](https://github.com/vroncevic/gen_pm/releases)** dow
 
 To install **gen_pm** type the following:
 
-```
+```bash
 tar xvzf gen_pm-x.y.tar.gz
 cd gen_pm-x.y
 cp -R ~/sh_tool/bin/   /root/scripts/gen_pm/ver.x.y/
@@ -44,7 +44,8 @@ cp -R ~/sh_tool/log/   /root/scripts/gen_pm/ver.x.y/
 ```
 
 Self generated setup script and execution
-```
+
+```bash
 ./gen_pm_setup.sh 
 
 [setup] installing App/Tool/Script gen_pm
@@ -75,7 +76,7 @@ Or You can use docker to create image/container.
 
 ### Usage
 
-```
+```bash
 # Create symlink for shell tool
 ln -s /root/scripts/gen_pm/ver.x.y/bin/gen_pm.sh /root/bin/gen_pm
 
@@ -169,7 +170,8 @@ FileCheck/
 **gen_pm** is based on MOP.
 
 Shell tool structure
-```
+
+```bash
 sh_tool/
 ├── bin/
 │   ├── center.sh
