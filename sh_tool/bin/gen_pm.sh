@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # @brief   Generating Perl Package Module
-# @version ver.2.0
+# @version ver.3.0
 # @date    Sun 05 Dec 2021 04:45:55 AM CET
 # @company None, free software to use 2021
 # @author  Vladimir Roncevic <elektron.ronca@gmail.com>
@@ -20,20 +20,15 @@ UTIL_LOG=${UTIL}/log
 .    ${UTIL}/bin/load_conf.sh
 .    ${UTIL}/bin/load_util_conf.sh
 .    ${UTIL}/bin/progress_bar.sh
+.    ${UTIL}/bin/display_logo.sh
 
 GEN_PM_TOOL=gen_pm
-GEN_PM_VERSION=ver.2.0
+GEN_PM_VERSION=ver.3.0
 GEN_PM_HOME=${UTIL_ROOT}/${GEN_PM_TOOL}/${GEN_PM_VERSION}
 GEN_PM_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}.cfg
 GEN_PM_UTIL_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}_util.cfg
 GEN_PM_LOGO=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}.logo
 GEN_PM_LOG=${GEN_PM_HOME}/log
-
-tabs 4
-CONSOLE_WIDTH=$(stty size | awk '{print $2}')
-
-.    ${GEN_PM_HOME}/bin/center.sh
-.    ${GEN_PM_HOME}/bin/display_logo.sh
 
 declare -A GEN_PM_USAGE=(
     [USAGE_TOOL]="${GEN_PM_TOOL}"
@@ -77,8 +72,8 @@ TOOL_NOTIFY="false"
 #
 function __gen_pm {
     local MNAME=$1 WCCODE=$2
-    display_logo
     if [ -n "${MNAME}" ]; then
+        display_logo "vroncevic" "${GEN_PM_TOOL}" "${GEN_PM_VERSION}" "${GEN_PM_LOGO}"
         local FUNC=${FUNCNAME[0]} MSG="None"
         local STATUS_CONF STATUS_CONF_UTIL STATUS
         MSG="Loading basic and util configuration!"
