@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # @brief   Generating Perl Package Module
-# @version ver.2.0
+# @version ver.3.0
 # @date    Sun 05 Dec 2021 04:45:55 AM CET
 # @company None, free software to use 2021
 # @author  Vladimir Roncevic <elektron.ronca@gmail.com>
@@ -22,7 +22,7 @@ UTIL_LOG=${UTIL}/log
 .    ${UTIL}/bin/progress_bar.sh
 
 GEN_PM_TOOL=gen_pm
-GEN_PM_VERSION=ver.2.0
+GEN_PM_VERSION=ver.3.0
 GEN_PM_HOME=${UTIL_ROOT}/${GEN_PM_TOOL}/${GEN_PM_VERSION}
 GEN_PM_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}.cfg
 GEN_PM_UTIL_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}_util.cfg
