@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # @brief   Generating Perl Package Module
-# @version ver.3.0
+# @version ver.4.0
 # @date    Sun 05 Dec 2021 04:45:55 AM CET
 # @company None, free software to use 2021
 # @author  Vladimir Roncevic <elektron.ronca@gmail.com>
@@ -11,8 +11,6 @@ UTIL_VERSION=ver.1.0
 UTIL=${UTIL_ROOT}/sh_util/${UTIL_VERSION}
 UTIL_LOG=${UTIL}/log
 
-.    ${UTIL}/bin/devel.sh
-.    ${UTIL}/bin/usage.sh
 .    ${UTIL}/bin/check_root.sh
 .    ${UTIL}/bin/check_tool.sh
 .    ${UTIL}/bin/logging.sh
@@ -23,7 +21,7 @@ UTIL_LOG=${UTIL}/log
 .    ${UTIL}/bin/display_logo.sh
 
 GEN_PM_TOOL=gen_pm
-GEN_PM_VERSION=ver.3.0
+GEN_PM_VERSION=ver.4.0
 GEN_PM_HOME=${UTIL_ROOT}/${GEN_PM_TOOL}/${GEN_PM_VERSION}
 GEN_PM_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}.cfg
 GEN_PM_UTIL_CFG=${GEN_PM_HOME}/conf/${GEN_PM_TOOL}_util.cfg
@@ -51,6 +49,13 @@ declare -A PB_STRUCTURE=(
     [SLEEP]=0.01
 )
 
+declare -A GEN_PM_LOGO_DATA=(
+    [OWNER]="vroncevic"
+    [REPO]="${GEN_PM_TOOL}"
+    [VERSION]="${GEN_PM_VERSION}"
+    [LOGO]="${GEN_PM_LOGO}"
+)
+
 TOOL_DBG="false"
 TOOL_LOG="true"
 TOOL_NOTIFY="false"
@@ -72,75 +77,75 @@ TOOL_NOTIFY="false"
 #
 function __gen_pm {
     local MNAME=$1 WCCODE=$2
-    if [ -n "${MNAME}" ]; then
-        display_logo "vroncevic" "${GEN_PM_TOOL}" "${GEN_PM_VERSION}" "${GEN_PM_LOGO}"
-        local FUNC=${FUNCNAME[0]} MSG="None"
-        local STATUS_CONF STATUS_CONF_UTIL STATUS
-        MSG="Loading basic and util configuration!"
-        info_debug_message "$MSG" "$FUNC" "$GEN_PM_TOOL"
-        progress_bar PB_STRUCTURE
-        declare -A config_gen_pm=()
-        load_conf "$GEN_PM_CFG" config_gen_pm
-        STATUS_CONF=$?
-        declare -A config_gen_pm_util=()
-        load_util_conf "$GEN_PM_UTIL_CFG" config_gen_pm_util
-        STATUS_CONF_UTIL=$?
-        declare -A STATUS_STRUCTURE=(
-            [1]=$STATUS_CONF [2]=$STATUS_CONF_UTIL
-        )
-        check_status STATUS_STRUCTURE
-        STATUS=$?
-        if [ $STATUS -eq $NOT_SUCCESS ]; then
-            MSG="Force exit!"
-            info_debug_message_end "$MSG" "$FUNC" "$GEN_PM_TOOL"
-            exit 129
-        fi
-        TOOL_LOG=${config_gen_pm[LOGGING]}
-        TOOL_DBG=${config_gen_pm[DEBUGGING]}
-        TOOL_NOTIFY=${config_gen_pm[EMAILING]}
-        local H2XS=${config_gen_pm_util[H2XS]}
-        check_tool "${H2XS}"
-        STATUS=$?
-        if [ $STATUS -eq $SUCCESS ]; then
-            local DATE=$(date) TREE
-            MSG="Generating module [${MNAME}]"
-            info_debug_message "$MSG" "$FUNC" "$GEN_PM_TOOL"
-            if [[ -n "${WCCODE}" && "${WCCODE}" == "wc" ]]; then
-                eval "${H2XS} -cn \"${MNAME}\""
-            else
-                eval "${H2XS} -AX -n \"${MNAME}\""
-            fi
-            local USRID=${config_gen_pm_util[USERID]}
-            local GRPID=${config_gen_pm_util[GROUPID]}
-            MSG="Set owner!"
-            info_debug_message "$MSG" "$FUNC" "$GEN_PM_TOOL"
-            eval "chown -R ${USRID}.${GRPID} ${MNAME}/"
-            MSG="Set permission!"
-            info_debug_message "$MSG" "$FUNC" "$GEN_PM_TOOL"
-            eval "chmod -R 700 ${MNAME}/"
-            info_debug_message_end "Done" "$FUNC" "$GEN_PM_TOOL"
-            MSG="Generated module ${MNAME}"
-            GEN_PM_LOGGING[LOG_MSGE]="$MSG"
-            GEN_PM_LOGGING[LOG_FLAG]="info"
-            logging GEN_PM_LOGGING
-            TREE=$(which tree)
-            check_tool "${TREE}"
-            STATUS=$?
-            if [ $STATUS -eq $SUCCESS ]; then
-                eval "${TREE} -L 3 ${MNAME}/"
-            fi
-            exit 0
-        fi
-        GEN_PM_LOG[LOG_MSGE]="Missing tool ${H2XS}"
-        GEN_PM_LOG[LOG_FLAG]="info"
-        logging GEN_PM_LOG
-        send_mail "$MSG" "${config_gen_pm[ADMIN_EMAIL]}"
+    if [ -z "${MNAME}" ]; then
+        usage GEN_PM_USAGE
+        exit 128
+    fi
+    display_logo GEN_PM_LOGO_DATA
+    local FUNC=${FUNCNAME[0]} MSG="None"
+    local STATUS_CONF STATUS_CONF_UTIL STATUS
+    MSG="Loading basic and util configuration!"
+    info_debug_message "$MSG" "$FUNC" "$GEN_PM_TOOL"
+    progress_bar PB_STRUCTURE
+    declare -A config_gen_pm=()
+    load_conf "$GEN_PM_CFG" config_gen_pm
+    STATUS_CONF=$?
+    declare -A config_gen_pm_util=()
+    load_util_conf "$GEN_PM_UTIL_CFG" config_gen_pm_util
+    STATUS_CONF_UTIL=$?
+    declare -A STATUS_STRUCTURE=(
+        [1]=$STATUS_CONF [2]=$STATUS_CONF_UTIL
+    )
+    check_status STATUS_STRUCTURE
+    STATUS=$?
+    if [ $STATUS -eq $NOT_SUCCESS ]; then
         MSG="Force exit!"
         info_debug_message_end "$MSG" "$FUNC" "$GEN_PM_TOOL"
-        exit 130
+        exit 129
     fi
-    usage GEN_PM_USAGE
-    exit 128
+    TOOL_LOG=${config_gen_pm[LOGGING]}
+    TOOL_DBG=${config_gen_pm[DEBUGGING]}
+    TOOL_NOTIFY=${config_gen_pm[EMAILING]}
+    local H2XS=${config_gen_pm_util[H2XS]}
+    check_tool "${H2XS}"
+    STATUS=$?
+    if [ $STATUS -eq $SUCCESS ]; then
+        local DATE=$(date) TREE
+        MSG="Generating module [${MNAME}]"
+        info_debug_message "$MSG" "$FUNC" "$GEN_PM_TOOL"
+        if [[ -n "${WCCODE}" && "${WCCODE}" == "wc" ]]; then
+            eval "${H2XS} -cn \"${MNAME}\""
+        else
+            eval "${H2XS} -AX -n \"${MNAME}\""
+        fi
+        local USRID=${config_gen_pm_util[USERID]}
+        local GRPID=${config_gen_pm_util[GROUPID]}
+        MSG="Set owner!"
+        info_debug_message "$MSG" "$FUNC" "$GEN_PM_TOOL"
+        eval "chown -R ${USRID}.${GRPID} ${MNAME}/"
+        MSG="Set permission!"
+        info_debug_message "$MSG" "$FUNC" "$GEN_PM_TOOL"
+        eval "chmod -R 700 ${MNAME}/"
+        info_debug_message_end "Done" "$FUNC" "$GEN_PM_TOOL"
+        MSG="Generated module ${MNAME}"
+        GEN_PM_LOGGING[LOG_MSGE]="$MSG"
+        GEN_PM_LOGGING[LOG_FLAG]="info"
+        logging GEN_PM_LOGGING
+        TREE=$(which tree)
+        check_tool "${TREE}"
+        STATUS=$?
+        if [ $STATUS -eq $SUCCESS ]; then
+            eval "${TREE} -L 3 ${MNAME}/"
+        fi
+        exit 0
+    fi
+    GEN_PM_LOG[LOG_MSGE]="Missing tool ${H2XS}"
+    GEN_PM_LOG[LOG_FLAG]="info"
+    logging GEN_PM_LOG
+    send_mail "$MSG" "${config_gen_pm[ADMIN_EMAIL]}"
+    MSG="Force exit!"
+    info_debug_message_end "$MSG" "$FUNC" "$GEN_PM_TOOL"
+    exit 130
 }
 
 #
